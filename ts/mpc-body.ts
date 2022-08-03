@@ -1,4 +1,8 @@
 class MPCBody extends HTMLBodyElement {
+  static i18n(string: string) {
+    return MPCHelper.i18n(string, "mpc-body");
+  }
+
   #shadowRoot = this.attachShadow({
     mode: "closed",
     delegatesFocus: true
@@ -20,12 +24,12 @@ class MPCBody extends HTMLBodyElement {
     addEventListener("beforeunload", event => {
       if (document.querySelectorAll("[edit]").length) {
         event.preventDefault();
-        event.returnValue = MPCHelper.i18n("Some sections have opened editors. Please close them before closing the window.", "mpc-body");
+        event.returnValue = MPCBody.i18n("Some sections have opened editors. Please close them before closing the window.");
       }
 
       if (firstModified != MPCDocument.lastModified) {
         event.preventDefault();
-        event.returnValue = MPCHelper.i18n("Changes have been made since the document was opened. Have you saved the changes?", "mpc-body");
+        event.returnValue = MPCBody.i18n("Changes have been made since the document was opened. Have you saved the changes?");
       }
     });
   }
@@ -41,33 +45,33 @@ class MPCBody extends HTMLBodyElement {
             "button",
             {
               className: "tool tool-add",
-              title: MPCHelper.i18n("Add section above", "mpc-body"),
+              title: MPCBody.i18n("Add section above"),
               onclick: event => {
                 event.preventDefault();
                 this.insertBefore(new MPCEditor(), this.#copyright);
                 MPCDocument.lastModified = new Date();
               }
             },
-            MPCHelper.createElement("span", null, MPCHelper.i18n("Add", "mpc-body"))
+            MPCHelper.createElement("span", null, MPCBody.i18n("Add"))
           ),
           MPCHelper.createElement("hr"),
           MPCHelper.createElement(
             "button",
             {
               className: "tool tool-edit",
-              title: MPCHelper.i18n("Edit preferences", "mpc-body"),
+              title: MPCBody.i18n("Edit preferences"),
               onclick: event => {
                 event.preventDefault();
                 this.#showDocumentInformationDialog();
               }
             },
-            MPCHelper.createElement("span", null, MPCHelper.i18n("Preferences", "mpc-body"))
+            MPCHelper.createElement("span", null, MPCBody.i18n("Preferences"))
           ),
           MPCHelper.createElement(
             "button",
             {
               className: "tool tool-save",
-              title: MPCHelper.i18n("Save file", "mpc-body"),
+              title: MPCBody.i18n("Save file"),
               onclick(event) {
                 event.preventDefault();
                 MPCHelper.createElement("a", {
@@ -81,7 +85,7 @@ class MPCBody extends HTMLBodyElement {
                 }).click();
               }
             },
-            MPCHelper.createElement("span", null, MPCHelper.i18n("Save file", "mpc-body"))
+            MPCHelper.createElement("span", null, MPCBody.i18n("Save file"))
           ),
         ]),
       ),
@@ -90,14 +94,14 @@ class MPCBody extends HTMLBodyElement {
 
   async #showDocumentInformationDialog() {
     const value = await MPCHelper.createDialog({
-      headerText: MPCHelper.i18n("Preferences", "mpc-body"),
+      headerText: MPCBody.i18n("Preferences"),
       okText: "Ok",
       cancelText: "Cancel"
     }, null, [
-      MPCHelper.createElement("h4", null, MPCHelper.i18n("Document properties", "mpc-body"), { textAlign: "center" }),
+      MPCHelper.createElement("h4", null, MPCBody.i18n("Document properties"), { textAlign: "center" }),
       MPCHelper.createInput({
         type: "text",
-        text: MPCHelper.i18n("Author:", "mpc-body"),
+        text: MPCBody.i18n("Author:"),
         name: "author",
         value: MPCDocument.author
       }, {
@@ -106,7 +110,7 @@ class MPCBody extends HTMLBodyElement {
       }),
       MPCHelper.createInput({
         type: "text",
-        text: MPCHelper.i18n("Title:", "mpc-body"),
+        text: MPCBody.i18n("Title:"),
         name: "title",
         value: MPCDocument.title
       }, {
@@ -124,12 +128,12 @@ class MPCBody extends HTMLBodyElement {
         }),
         MPCHelper.createElement("span", {
           className: "label-text",
-          textContent: MPCHelper.i18n("Description:", "mpc-body")
+          textContent: MPCBody.i18n("Description:")
         })
       ]),
       MPCHelper.createInput({
         type: "text",
-        text: MPCHelper.i18n("Document language:", "mpc-body"),
+        text: MPCBody.i18n("Document language:"),
         name: "lang",
         value: this.lang
       }, {
@@ -148,23 +152,32 @@ class MPCBody extends HTMLBodyElement {
       MPCHelper.createElement("label", { className: "label label-output" }, [
         MPCHelper.createElement("span", {
           className: "label-text",
-          textContent: MPCHelper.i18n("Last modified:", "mpc-body")
+          textContent: MPCBody.i18n("Last modified:")
         }),
         MPCHelper.createElement("output", {
           className: "label-output",
           value: MPCDate.date("jS F Y / H:i:s", MPCDocument.lastModified || null)
         })
       ]),
-      MPCHelper.createElement("h4", null, MPCHelper.i18n("Global preferences", "mpc-body"), { textAlign: "center" }),
+      MPCHelper.createElement("h4", null, MPCBody.i18n("Global preferences"), { textAlign: "center" }),
       MPCHelper.createInput({
         type: "text",
-        text: MPCHelper.i18n("Global language:", "mpc-body"),
+        text: MPCBody.i18n("Global language:"),
         name: "global-lang",
         value: MPCHelper.lang
       }, {
         list: MPCHelper.langs.map(lang => new Option(MPCLangMap.get(lang), lang)),
         required: true,
         autocomplete: "no"
+      }),
+      MPCHelper.createButton({
+        text: MPCBody.i18n("Create new document"),
+        icon: "document"
+      }, {
+        onclick(event) {
+          event.preventDefault();
+          window.open("https://mpdieckmann.github.io/MPCEditor/index.html");
+        }
       }),
     ]).showModal(true);
     if (value) {

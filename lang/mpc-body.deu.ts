@@ -11,5 +11,6 @@ MPCHelper.registerI18n("deu", "mpc-body", {
   "Document language:": "Dokumentsprache:",
   "Last modified:": "Zuletzt bearbeitet:",
   "Global preferences": "Einstellungen",
-  "Global language:": "Globale Sprache:"
+  "Global language:": "Globale Sprache:",
+  "Create new document": "Neues Dokument",
 });
