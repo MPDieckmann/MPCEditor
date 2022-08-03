@@ -42,15 +42,23 @@ class MPCBody extends HTMLBodyElement {
             MPCHelper.createElement("hr"),
             MPCHelper.createElement("button", {
                 className: "tool tool-newDocument",
-                title: MPCBody.i18n("Create new document"),
+                title: MPCBody.i18n("New document"),
                 onclick(event) {
                     event.preventDefault();
                     window.open("https://mpdieckmann.github.io/MPCEditor/index.html");
                 }
             }, MPCHelper.createElement("span", null, MPCBody.i18n("New document"))),
+            MPCHelper.createElement("button", {
+                className: "tool tool-print",
+                title: MPCBody.i18n("Print"),
+                onclick(event) {
+                    event.preventDefault();
+                    print();
+                }
+            }, MPCHelper.createElement("span", null, MPCBody.i18n("Print"))),
             MPCHelper.createElement("hr"),
             MPCHelper.createElement("button", {
-                className: "tool tool-edit",
+                className: "tool tool-documentInfo",
                 title: MPCBody.i18n("Edit preferences"),
                 onclick: event => {
                     event.preventDefault();
@@ -2465,6 +2473,7 @@ MPCHelper.registerI18n("deu", "mpc-body", {
     "Global language:": "Globale Sprache:",
     "New document": "Neues Dokument",
     "End of document": "Ende des Dokumentes",
+    "Print": "Drucken",
 });
 MPCHelper.registerI18n("deu", "mpc-date", {
     "Sunday": "Sonntag",

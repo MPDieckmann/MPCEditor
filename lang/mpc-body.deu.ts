@@ -14,4 +14,5 @@ MPCHelper.registerI18n("deu", "mpc-body", {
   "Global language:": "Globale Sprache:",
   "New document": "Neues Dokument",
   "End of document": "Ende des Dokumentes",
+  "Print": "Drucken",
 });
