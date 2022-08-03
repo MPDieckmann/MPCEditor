@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "module": "None",
+    "target": "esnext",
+    "outFile": "js/script.js"
+  },
+  "include": [
+    "ts/*.ts",
+    "lang/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
