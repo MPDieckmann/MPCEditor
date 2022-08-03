@@ -29,7 +29,7 @@ class MPCBody extends HTMLBodyElement {
     }
     #populateShadowRoot() {
         this.#shadowRoot.innerHTML = "";
-        this.#shadowRoot.append(document.getElementById("style-css").cloneNode(true), MPCHelper.createElement("slot", { className: "content" }), MPCHelper.createElement("div", { className: "toolbar" }, MPCHelper.createElement("div", { className: "tool-group" }, [
+        this.#shadowRoot.append(document.getElementById("style-css").cloneNode(true), MPCHelper.createElement("slot", { className: "content" }), MPCHelper.createElement("p", { className: "end-of-document" }, MPCBody.i18n("End of document")), MPCHelper.createElement("slot", { className: "copyright", name: "copyright" }), MPCHelper.createElement("div", { className: "toolbar" }, MPCHelper.createElement("div", { className: "tool-group" }, [
             MPCHelper.createElement("button", {
                 className: "tool tool-add",
                 title: MPCBody.i18n("Add section above"),
@@ -39,6 +39,15 @@ class MPCBody extends HTMLBodyElement {
                     MPCDocument.lastModified = new Date();
                 }
             }, MPCHelper.createElement("span", null, MPCBody.i18n("Add"))),
+            MPCHelper.createElement("hr"),
+            MPCHelper.createElement("button", {
+                className: "tool tool-newDocument",
+                title: MPCBody.i18n("Create new document"),
+                onclick(event) {
+                    event.preventDefault();
+                    window.open("https://mpdieckmann.github.io/MPCEditor/index.html");
+                }
+            }, MPCHelper.createElement("span", null, MPCBody.i18n("New document"))),
             MPCHelper.createElement("hr"),
             MPCHelper.createElement("button", {
                 className: "tool tool-edit",
@@ -135,15 +144,6 @@ class MPCBody extends HTMLBodyElement {
                 list: MPCHelper.langs.map(lang => new Option(MPCLangMap.get(lang), lang)),
                 required: true,
                 autocomplete: "no"
-            }),
-            MPCHelper.createButton({
-                text: MPCBody.i18n("Create new document"),
-                icon: "document"
-            }, {
-                onclick(event) {
-                    event.preventDefault();
-                    window.open("https://mpdieckmann.github.io/MPCEditor/index.html");
-                }
             }),
         ]).showModal(true);
         if (value) {
@@ -2463,7 +2463,8 @@ MPCHelper.registerI18n("deu", "mpc-body", {
     "Last modified:": "Zuletzt bearbeitet:",
     "Global preferences": "Einstellungen",
     "Global language:": "Globale Sprache:",
-    "Create new document": "Neues Dokument",
+    "New document": "Neues Dokument",
+    "End of document": "Ende des Dokumentes",
 });
 MPCHelper.registerI18n("deu", "mpc-date", {
     "Sunday": "Sonntag",
@@ -2507,7 +2508,7 @@ MPCHelper.registerI18n("deu", "mpc-editor", {
     "Select language": "Sprache auswählen",
     "Show": "Anzeigen",
     "Cancel": "Abbrechen",
-    "Please select the language you want to show": "Bitte wähle eine Anzeigesprache",
+    "Please select the language you want to see": "Bitte wähle eine Anzeigesprache",
     "Add new language": "Anzeigesprache hinzufügen",
     "Adding a new language will create a copy of the current visible content as the base for the translation.": "Das Hinzufügen einer Anzeigesprache wird den aktuell angezeigten Inhalt als Grundlage für die Übersetzung kopieren.",
     "Language code": "Sprachcode",

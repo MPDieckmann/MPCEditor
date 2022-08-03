@@ -39,6 +39,8 @@ class MPCBody extends HTMLBodyElement {
     this.#shadowRoot.append(
       document.getElementById("style-css").cloneNode(true),
       MPCHelper.createElement("slot", { className: "content" }),
+      MPCHelper.createElement("p", { className: "end-of-document" }, MPCBody.i18n("End of document")),
+      MPCHelper.createElement("slot", { className: "copyright", name: "copyright" }),
       MPCHelper.createElement("div", { className: "toolbar" },
         MPCHelper.createElement("div", { className: "tool-group" }, [
           MPCHelper.createElement(
@@ -53,6 +55,19 @@ class MPCBody extends HTMLBodyElement {
               }
             },
             MPCHelper.createElement("span", null, MPCBody.i18n("Add"))
+          ),
+          MPCHelper.createElement("hr"),
+          MPCHelper.createElement(
+            "button",
+            {
+              className: "tool tool-newDocument",
+              title: MPCBody.i18n("Create new document"),
+              onclick(event) {
+                event.preventDefault();
+                window.open("https://mpdieckmann.github.io/MPCEditor/index.html");
+              }
+            },
+            MPCHelper.createElement("span", null, MPCBody.i18n("New document"))
           ),
           MPCHelper.createElement("hr"),
           MPCHelper.createElement(
@@ -169,15 +184,6 @@ class MPCBody extends HTMLBodyElement {
         list: MPCHelper.langs.map(lang => new Option(MPCLangMap.get(lang), lang)),
         required: true,
         autocomplete: "no"
-      }),
-      MPCHelper.createButton({
-        text: MPCBody.i18n("Create new document"),
-        icon: "document"
-      }, {
-        onclick(event) {
-          event.preventDefault();
-          window.open("https://mpdieckmann.github.io/MPCEditor/index.html");
-        }
       }),
     ]).showModal(true);
     if (value) {

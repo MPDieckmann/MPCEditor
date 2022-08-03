@@ -10,7 +10,7 @@ MPCHelper.registerI18n("deu", "mpc-editor", {
   "Select language": "Sprache auswählen",
   "Show": "Anzeigen",
   "Cancel": "Abbrechen",
-  "Please select the language you want to show": "Bitte wähle eine Anzeigesprache",
+  "Please select the language you want to see": "Bitte wähle eine Anzeigesprache",
   "Add new language": "Anzeigesprache hinzufügen",
   "Adding a new language will create a copy of the current visible content as the base for the translation.": "Das Hinzufügen einer Anzeigesprache wird den aktuell angezeigten Inhalt als Grundlage für die Übersetzung kopieren.",
   "Language code": "Sprachcode",
