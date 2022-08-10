@@ -116,6 +116,7 @@ class MPCBody extends HTMLBodyElement {
           ),
         ]),
       ),
+      MPCHelper.createElement("slot", { className: "keyboard", name: "keyboard" }),
     );
   }
 

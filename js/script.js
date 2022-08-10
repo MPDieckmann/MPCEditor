@@ -81,7 +81,7 @@ class MPCBody extends HTMLBodyElement {
                     }).click();
                 }
             }, MPCHelper.createElement("span", null, MPCBody.i18n("Save file"))),
-        ])));
+        ])), MPCHelper.createElement("slot", { className: "keyboard", name: "keyboard" }));
     }
     async #showDocumentInformationDialog() {
         const value = await MPCHelper.createDialog({
@@ -1329,7 +1329,8 @@ class MPCEditor extends HTMLElement {
         return [
             "edit",
             "lang",
-            "lastModified"
+            "lastModified",
+            "inputmode",
         ];
     }
     #shadowRoot = this.attachShadow({
@@ -1814,6 +1815,26 @@ class MPCEditor extends HTMLElement {
                                 document.execCommand("formatBlock", false, "h4");
                             },
                         }),
+                        // Tool Heading 5
+                        this.#createTool({
+                            props: { className: "tool tool-heading5", title: MPCEditor.i18n("Heading 5") },
+                            onCaretPosition(node, element, button) {
+                                button.classList.toggle("active", !!element.closest("h5"));
+                            },
+                            onClick() {
+                                document.execCommand("formatBlock", false, "h5");
+                            },
+                        }),
+                        // Tool Heading 6
+                        this.#createTool({
+                            props: { className: "tool tool-heading6", title: MPCEditor.i18n("Heading 6") },
+                            onCaretPosition(node, element, button) {
+                                button.classList.toggle("active", !!element.closest("h6"));
+                            },
+                            onClick() {
+                                document.execCommand("formatBlock", false, "h6");
+                            },
+                        }),
                         // Tool Paragraph
                         this.#createTool({
                             props: { className: "tool tool-paragraph", title: MPCEditor.i18n("Paragraph") },
@@ -1960,7 +1981,9 @@ class MPCEditor extends HTMLElement {
         // Content
         MPCHelper.createElement("slot", { className: "content static" }), 
         // EditableContent
-        this.#editableContent);
+        this.#editableContent, 
+        // Keyboard Support
+        MPCHelper.createElement("slot", { className: "keyboard", name: "keyboard" }));
     }
     set lang(value) {
         if (this.langs.includes(value)) {
@@ -2027,6 +2050,9 @@ class MPCEditor extends HTMLElement {
                 if (newValue) {
                     this.#styleElement.textContent = `.content > [lang]:not(:lang(${newValue})), :host(mpc-editor) ::slotted([lang]:not(:lang(${newValue}))) { display: none; }`;
                 }
+                break;
+            case "inputmode":
+                this.#editableContent.inputMode = newValue;
                 break;
         }
     }
